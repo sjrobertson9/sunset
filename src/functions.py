@@ -41,6 +41,8 @@ def make_weather(json):
 def parse_icon(icon):
     return icon.strip('dn')
 
+def parse_sunset(sunset):
+    
 
 # NOTE: if i ever decided to expand, a more comprehensive list could be
 #       created by using the weather condition code IDs
