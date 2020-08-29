@@ -1,25 +1,17 @@
-import requests
+import functions
 
-print(">>> Getting location data...")
+# call function that returns a dictionary of the relevant weather values
+# call function that returns calculated score based on dictionary
+# returns values to be printed in main
+def calculate():
+    weather = functions.get_weather()
 
-ips_response = requests.get("http://api.ipstack.com/check?access_key=adab7fe0178697d5ffacb44af49876d4")
+    # dictionary of values to be inserted in default message
+    # date
+    # time
+    # score_message
+    # score_factors
+    
+    score = functions.get_score(weather)
 
-print(ips_response.json())
-
-# GET INFO FOR WEATHER API
-
-ips_data = ips_response.json()
-city = ips_data["city"]
-state = ips_data["region_name"]
-
-print(">>> Getting weather data...")
-
-key = "7aa9e7efe97e40ea07757dbf0c02b044"
-url = "http://api.openweathermap.org/data/2.5/"
-params = "?q=" + city + "," + state + "&units=imperial&appid="
-
-complete_url = url + "weather" + params + key
-
-opw_response = requests.get(complete_url)
-
-print(opw_response.json())
+    return weather #score
