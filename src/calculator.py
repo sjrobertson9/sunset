@@ -12,6 +12,7 @@ def calculate():
     # score_message
     # score_factors
     
-    score = functions.get_score(weather)
+    # score = functions.get_score(weather)
+
 
     return weather #score

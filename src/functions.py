@@ -1,4 +1,5 @@
 import requests
+import datetime
 
 def get_weather():
     # GET INFO FOR WEATHER API
@@ -32,17 +33,19 @@ def make_weather(json):
         'visibility' : json['visibility'],
         'wind'       : json['wind']['speed'],
         'clouds'     : json['clouds']['all'],
-        'sunset'     : json['sys']['sunset']
+        'sunset'     : parse_sunset(json['sys']['sunset'])
     }
     return weather
-
 
 # icon ex: "10n.png"
 def parse_icon(icon):
     return icon.strip('dn')
 
+# turns it to normal time
 def parse_sunset(sunset):
-    
+    time = datetime.datetime.fromtimestamp(sunset)
+    return time.strftime('%H:%M:%S')
+
 
 # NOTE: if i ever decided to expand, a more comprehensive list could be
 #       created by using the weather condition code IDs
