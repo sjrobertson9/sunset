@@ -20,8 +20,9 @@ def get_weather():
     return make_weather(opw_response.json())
 
 # weather = dictionary of relevant values
-def get_score(weather):
-    # return dictionary of values
+def calculate_score(weather):
+    # calculate the score based on the values in weather
+    # based on the score, return score, score_message
     pass
 
 
@@ -36,6 +37,10 @@ def make_weather(json):
         'sunset'     : parse_sunset(json['sys']['sunset'])
     }
     return weather
+
+def interpret_score(score):
+    # cascading if statements with ranges
+    pass
 
 # icon ex: "10n.png"
 def parse_icon(icon):

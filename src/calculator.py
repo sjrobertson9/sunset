@@ -6,13 +6,6 @@ import functions
 def calculate():
     weather = functions.get_weather()
 
-    # dictionary of values to be inserted in default message
-    # date
-    # time
-    # score_message
-    # score_factors
-    
-    # score = functions.get_score(weather)
-
+    #score = functions.calculate_score(weather)
 
     return weather #score
