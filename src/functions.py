@@ -1,6 +1,8 @@
 import requests
 import datetime
 
+### SOURCING API
+
 def get_weather():
     # GET INFO FOR WEATHER API
     ips_response = requests.get("http://api.ipstack.com/check?access_key=adab7fe0178697d5ffacb44af49876d4")
@@ -19,14 +21,18 @@ def get_weather():
     # RETURN RELEVANT VALUES
     return make_weather(opw_response.json())
 
-# weather = dictionary of relevant values
+### SCORE CALCULATION
+
+# weather : dictionary of relevant values
 def calculate_score(weather):
     return calculate_icon(weather["icon"]) + calculate_pressure(weather["pressure"]) + calculate_humidity(weather["humidity"]) \
              + calculate_visibility(weather["visibility"]) + calculate_clouds(weather["clouds"])
 
+# icon : visual symbol of weather
 def calculate_icon(icon):
     return icon_scores[icon]
 
+# pressure : air pressure in hPa
 def calculate_pressure(pressure):
     if pressure > 1000:
         return 8
@@ -35,6 +41,7 @@ def calculate_pressure(pressure):
     else: 
         return 5
 
+# humidity : air humidity as a %
 def calculate_humidity(humidity):
     if humidity > 50:
         return 3
@@ -43,6 +50,7 @@ def calculate_humidity(humidity):
     else:
         return 5
 
+# visibility : visible distance in feet
 def calculate_visibility(visibility):
     if visibility > 10000:
         return 8
@@ -51,6 +59,7 @@ def calculate_visibility(visibility):
     else:
         return 5
 
+# clouds : cloud cover as a %
 def calculate_clouds(clouds):
     if clouds < 25:
         return 8
@@ -58,6 +67,20 @@ def calculate_clouds(clouds):
         return 5
     elif clouds < 75:
         return 3
+
+# score : how good is da sunset
+def interpret_score(score):
+    if 30 < score <= 40:
+        return "EXCELLENT"
+    elif 20 < score <= 30:
+        return "GOOD"
+    elif 10 < score <= 30:
+        return "MEDIOCRE"
+    else:
+        return "ayo that shit SUCKS"
+    
+
+### PARSING
 
 def make_weather(json):
     weather = {
@@ -69,17 +92,6 @@ def make_weather(json):
         'sunset'     : parse_sunset(json['sys']['sunset'])
     }
     return weather
-
-def interpret_score(score):
-    if 30 < score <= 40:
-        return "EXCELLENT"
-    elif 20 < score <= 30:
-        return "GOOD"
-    elif 10 < score <= 30:
-        return "MEDIOCRE"
-    else:
-        return "ayo that shit sucks"
-    
 
 # icon ex: "10n.png"
 def parse_icon(icon):
