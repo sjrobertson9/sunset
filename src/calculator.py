@@ -6,6 +6,6 @@ import functions
 def calculate():
     weather = functions.get_weather()
 
-    #score = functions.calculate_score(weather)
+    score = functions.calculate_score(weather)
 
-    return weather #score
+    return functions.interpret_score(score)

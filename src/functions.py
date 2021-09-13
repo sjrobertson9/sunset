@@ -21,10 +21,43 @@ def get_weather():
 
 # weather = dictionary of relevant values
 def calculate_score(weather):
-    # calculate the score based on the values in weather
-    # based on the score, return score, score_message
-    pass
+    return calculate_icon(weather["icon"]) + calculate_pressure(weather["pressure"]) + calculate_humidity(weather["humidity"]) \
+             + calculate_visibility(weather["visibility"]) + calculate_clouds(weather["clouds"])
 
+def calculate_icon(icon):
+    return icon_scores[icon]
+
+def calculate_pressure(pressure):
+    if pressure > 1000:
+        return 8
+    elif pressure < 1000:
+        return 3
+    else: 
+        return 5
+
+def calculate_humidity(humidity):
+    if humidity > 50:
+        return 3
+    elif humidity < 50: 
+        return 8
+    else:
+        return 5
+
+def calculate_visibility(visibility):
+    if visibility > 10000:
+        return 8
+    elif visibility < 10000:
+        return 3
+    else:
+        return 5
+
+def calculate_clouds(clouds):
+    if clouds < 25:
+        return 8
+    elif clouds < 50:
+        return 5
+    elif clouds < 75:
+        return 3
 
 def make_weather(json):
     weather = {
@@ -32,15 +65,21 @@ def make_weather(json):
         'pressure'   : json['main']['pressure'],
         'humidity'   : json['main']['humidity'],
         'visibility' : json['visibility'],
-        'wind'       : json['wind']['speed'],
         'clouds'     : json['clouds']['all'],
         'sunset'     : parse_sunset(json['sys']['sunset'])
     }
     return weather
 
 def interpret_score(score):
-    # cascading if statements with ranges
-    pass
+    if 30 < score <= 40:
+        return "EXCELLENT"
+    elif 20 < score <= 30:
+        return "GOOD"
+    elif 10 < score <= 30:
+        return "MEDIOCRE"
+    else:
+        return "ayo that shit sucks"
+    
 
 # icon ex: "10n.png"
 def parse_icon(icon):
@@ -51,6 +90,8 @@ def parse_sunset(sunset):
     time = datetime.datetime.fromtimestamp(sunset)
     return time.strftime('%H:%M:%S')
 
+
+### DICTIONARIES
 
 # NOTE: if i ever decided to expand, a more comprehensive list could be
 #       created by using the weather condition code IDs
@@ -65,3 +106,16 @@ icons = {
     '13' : 'snow',
     '50' : 'mist'
 }
+
+icon_scores = {
+    '01' : 5, # clear sky
+    '02' : 6, # few clouds
+    '03' : 7, # scattered clouds
+    '04' : 8, # broken clouds
+    '09' : 2, # shower rain
+    '10' : 2, # rain
+    '11' : 3, # thunderstorm
+    '13' : 3, # snow
+    '50' : 5  # mist
+}
+
